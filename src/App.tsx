@@ -1,5 +1,6 @@
 // src/App.tsx
-import { useState, useEffect, FormEvent } from 'react';
+import { useState, useEffect } from 'react';
+import type { FormEvent } from 'react';
 import {
   Authenticator,
   Button,
@@ -61,12 +62,12 @@ export default function App() {
     const imageFile = form.get('image') as File | null;
 
     const { data: newNote } = await client.models.Note.create({
-      name: form.get('name') as string,
-      description: form.get('description') as string,
-      image: imageFile?.name ?? '',
-    });
-
-    if (newNote.image && imageFile) {
+        name: form.get('name') as string,
+        description: form.get('description') as string,
+        image: imageFile?.name ?? '',
+      });
+      
+      if (newNote?.image && imageFile) {
       await uploadData({
         path: ({ identityId }) => `media/${identityId}/${newNote.image}`,
         data: imageFile,
